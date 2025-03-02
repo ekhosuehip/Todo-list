@@ -45,7 +45,10 @@ class TodoList {
 
     listTodos(): completeTodoItem[] {
         console.log("\n Todos🗓️");
-        this.todos.forEach((todo ) => console.log(`[${todo.id} ${todo.task} ${todo.completed ? "✅ Completed" : "❌ Pending"}]`));
+        this.todos.forEach((todo) => {
+            const status = todo.completed ? "✅ Completed" : `❌ Pending (Due: ${todo.dueDate.toDateString()})`;
+            console.log(`[${todo.id} ${todo.task} ${status}]`);
+        });
         return this.todos;
     }
 
