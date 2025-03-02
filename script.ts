@@ -43,26 +43,58 @@ class TodoList {
         }
     }
 
-    listTodos(): TodoItem[] {
+    listTodos(): completeTodoItem[] {
         console.log("\n Todos🗓️");
         this.todos.forEach((todo ) => console.log(`[${todo.id} ${todo.task} ${todo.completed ? "✅ Completed" : "❌ Pending"}]`));
         return this.todos;
     }
+
+    filterTodos(complted: boolean): TodoItem[] {
+        return this.todos.filter((todo) => todo.completed === complted)
+    }
+
+    updateDescription(id: number, description: string): void {
+        const taskToUpdate = this.todos.find((todo) => todo.id === id)
+        if (taskToUpdate){
+            taskToUpdate.task = description
+            console.log('✅ Task updated');   
+        } else {
+            console.log(`TodoItem with ${id} not found. ❌`)
+        }
+    }
+
+    clearCompleted(): void {
+        this.todos = this.todos.filter(todo => !todo.completed);
+        console.log("✅ Cleared all completed tasks.");
+      }
 }
 
 
-const myTodos = new TodoList();
+// Create a new todo list instance
+const myTodoList = new TodoList();
 
+// Add some tasks
+myTodoList.addTodo("Buy groceries", new Date("2025-03-01"));
+myTodoList.addTodo("Complete TypeScript project", new Date("2025-03-05"));
+myTodoList.addTodo("Read a book", new Date("2025-02-28"));
 
-myTodos.addTodo("Learn TypeScript", new Date("2025-03-01"));
-myTodos.addTodo("Build a Todo App", new Date("2025-03-05"));
-myTodos.addTodo("Write documentation", new Date("2025-03-10"));
+// List all todos
+myTodoList.listTodos();
 
-myTodos.listTodos();
+// Mark a task as completed
+myTodoList.completeTodo(2);
 
+// Filter incomplete todos
+console.log("\nIncomplete Todos:", myTodoList.filterTodos(false));
 
-myTodos.completeTodo(2);
+// Update a task description
+myTodoList.updateDescription(1, "Buy groceries and cook dinner");
 
-myTodos.removeTodo(1);
+// Remove a task
+myTodoList.removeTodo(3);
 
-myTodos.listTodos();
+// Clear completed todos
+myTodoList.clearCompleted();
+
+// Final list of todos
+myTodoList.listTodos();
